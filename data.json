@@ -1,0 +1,62 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "Agam",
+      "password": "5280",
+      "name": "Agam Pathak",
+      "role": "admin"
+    }
+  ],
+  "vehicles": [],
+  "drivers": [],
+  "routes": [],
+  "assignments": [],
+  "consignments": [
+    {
+      "id": 1,
+      "lrNumber": "LR-2026-0001",
+      "customerName": "ACME",
+      "material": "Steel",
+      "weightKg": 3500,
+      "promisedEta": null,
+      "status": "Delivered",
+      "assignmentId": 1,
+      "pickupOtp": "0972",
+      "dropOtp": "4461",
+      "pickupVerifiedAt": "2026-03-03T15:27:18.450Z",
+      "dropVerifiedAt": "2026-03-03T15:27:18.460Z",
+      "pod": {
+        "receiverName": "R Singh",
+        "signature": "SIG-223",
+        "photoUrl": null,
+        "gps": null,
+        "timestamp": "2026-03-03T15:27:18.464Z"
+      },
+      "invoice": {
+        "invoiceNumber": "INV-00001",
+        "generatedAt": "2026-03-03T15:27:18.471Z",
+        "status": "Generated",
+        "baseCost": 3080,
+        "tollCost": 300,
+        "fuelSurcharge": 150,
+        "waitingCharge": 75,
+        "taxPercent": 18,
+        "taxAmount": 648.9,
+        "subTotal": 3605,
+        "totalAmount": 4253.9
+      },
+      "exception": null,
+      "createdAt": "2026-03-03T15:27:18.429Z",
+      "updatedAt": "2026-03-03T15:27:18.471Z"
+    }
+  ],
+  "counters": {
+    "vehicle": 1,
+    "driver": 1,
+    "route": 1,
+    "assignment": 1,
+    "consignment": 2,
+    "invoice": 2
+  }
+}
