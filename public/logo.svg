@@ -1,0 +1,24 @@
+<svg width="48" height="48" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="sarthiGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4f46e5" />
+      <stop offset="100%" stop-color="#10b981" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur stdDeviation="2" result="blur" />
+      <feOffset dx="1" dy="1" result="offsetBlur" />
+      <feComposite in="SourceGraphic" in2="offsetBlur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Outer Ring (Wheel) -->
+  <circle cx="50" cy="50" r="40" stroke="url(#sarthiGrad)" stroke-width="8" stroke-dasharray="10 5" />
+  
+  <!-- Compass Needle / Pin -->
+  <path d="M50 20 L60 50 L50 80 L40 50 Z" fill="url(#sarthiGrad)" filter="url(#shadow)" />
+  <circle cx="50" cy="50" r="4" fill="white" />
+
+  <!-- Sync Arcs -->
+  <path d="M70 30 A 30 30 0 0 1 70 70" stroke="#10b981" stroke-width="4" stroke-linecap="round" />
+  <path d="M30 70 A 30 30 0 0 1 30 30" stroke="#4f46e5" stroke-width="4" stroke-linecap="round" />
+</svg>

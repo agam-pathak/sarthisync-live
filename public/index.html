@@ -11,8 +11,8 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <link rel="stylesheet" href="./styles.css" />
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link rel="apple-touch-icon" href="favicon.ico">
+  <link rel="icon" type="image/svg+xml" href="logo.svg">
+  <link rel="apple-touch-icon" href="logo.svg">
  </head>
  <body>
   <div class="bg-shell" aria-hidden="true">
@@ -25,6 +25,7 @@
   <section id="loginView" class="auth-wrap">
     <div class="card auth-card shadow-lg border-0">
       <div class="card-body p-4 p-md-5">
+        <img src="logo.svg" alt="SarthiSync Logo" width="60" class="mb-3" />
         <h1 class="h4 mb-1 fw-bold">SarthiSync</h1>
         <p class="text-secondary mb-4">Transportation Operations Control Panel</p>
         <form id="loginForm" class="row g-3">
@@ -50,8 +51,9 @@
   <div id="appView" class="d-none pb-5">
     <nav class="navbar navbar-expand-lg app-nav sticky-top">
       <div class="container-fluid px-3 px-md-4">
-        <span class="navbar-brand text-white fw-semibold mb-0">
-          <i class="bi bi-truck me-2"></i>SarthiSync Live
+        <span class="navbar-brand text-white fw-semibold mb-0 d-flex align-items-center">
+          <img src="logo.svg" alt="SarthiSync" width="32" height="32" class="me-2" />
+          SarthiSync Live
         </span>
         <div class="d-flex align-items-center gap-2 ms-auto flex-wrap">
           <span class="badge text-bg-light" id="userBadge"></span>
