@@ -8,10 +8,59 @@
       "role": "admin"
     }
   ],
-  "vehicles": [],
-  "drivers": [],
-  "routes": [],
-  "assignments": [],
+  "vehicles": [
+    {
+      "id": 1,
+      "plate": "PB 01 AC 1234",
+      "type": "Truck (14ft)",
+      "capacity": 5000,
+      "rate": 25
+    }
+  ],
+  "drivers": [
+    {
+      "id": 1,
+      "name": "John Doe",
+      "license": "DL123456",
+      "phone": "9876543210"
+    }
+  ],
+  "routes": [
+    {
+      "id": 1,
+      "source": "New Delhi",
+      "destination": "Mumbai",
+      "distance": 1400,
+      "duration": 28
+    }
+  ],
+  "assignments": [
+    {
+      "id": 1,
+      "vehicleId": 1,
+      "routeId": 1,
+      "driverId": 1,
+      "consignmentId": 2,
+      "status": "In Transit",
+      "progress": 50,
+      "timeline": [
+        {
+          "timestamp": "2026-03-23T14:44:00.339Z",
+          "status": "Pending",
+          "progress": 0,
+          "note": "Assignment created"
+        },
+        {
+          "timestamp": "2026-03-23T14:44:45.378Z",
+          "status": "In Transit",
+          "progress": 50,
+          "note": "Status changed to In Transit"
+        }
+      ],
+      "createdAt": "2026-03-23T14:44:00.339Z",
+      "updatedAt": "2026-03-23T14:44:45.378Z"
+    }
+  ],
   "consignments": [
     {
       "id": 1,
@@ -49,14 +98,33 @@
       "exception": null,
       "createdAt": "2026-03-03T15:27:18.429Z",
       "updatedAt": "2026-03-03T15:27:18.471Z"
+    },
+    {
+      "id": 2,
+      "lrNumber": "LR999",
+      "customerName": "Acme Corp",
+      "material": "Industrial Tools",
+      "weightKg": 2000,
+      "promisedEta": null,
+      "status": "In Transit",
+      "assignmentId": 1,
+      "pickupOtp": "8382",
+      "dropOtp": "0335",
+      "pickupVerifiedAt": null,
+      "dropVerifiedAt": null,
+      "pod": null,
+      "invoice": null,
+      "exception": null,
+      "createdAt": "2026-03-23T14:43:43.862Z",
+      "updatedAt": "2026-03-23T14:44:45.378Z"
     }
   ],
   "counters": {
-    "vehicle": 1,
-    "driver": 1,
-    "route": 1,
-    "assignment": 1,
-    "consignment": 2,
+    "vehicle": 2,
+    "driver": 2,
+    "route": 2,
+    "assignment": 2,
+    "consignment": 3,
     "invoice": 2
   }
 }
