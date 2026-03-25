@@ -119,8 +119,8 @@ function parseCookies(req) {
     }, {});
 }
 
-function signSessionPayload(payload) {
-  return crypto.createHmac("sha256", SESSION_SECRET).update(payload).digest("hex");
+function hashPassword(password) {
+  return crypto.createHmac("sha256", SESSION_SECRET).update(password).digest("hex");
 }
 
 function safeStringEqual(a, b) {
@@ -132,7 +132,7 @@ function safeStringEqual(a, b) {
 
 function createSessionToken(userId, expiresAt) {
   const payload = `${userId}.${expiresAt}`;
-  const signature = signSessionPayload(payload);
+  const signature = crypto.createHmac("sha256", SESSION_SECRET).update(payload).digest("hex");
   return `${payload}.${signature}`;
 }
 
@@ -142,7 +142,7 @@ function parseSessionToken(token) {
 
   const [userIdRaw, expiresAtRaw, signature] = parts;
   const payload = `${userIdRaw}.${expiresAtRaw}`;
-  const expectedSignature = signSessionPayload(payload);
+  const expectedSignature = crypto.createHmac("sha256", SESSION_SECRET).update(payload).digest("hex");
   if (!safeStringEqual(signature, expectedSignature)) {
     return null;
   }
@@ -228,7 +228,7 @@ function createStarterData() {
       {
         id: 1,
         username: "Agam",
-        password: "5280",
+        password: hashPassword("5280"),
         name: "Agam Pathak",
         role: "admin"
       }
@@ -721,14 +721,51 @@ async function handleApi(req, res, url) {
     }
 
     const data = await readData();
-    const user = data.users.find((item) => item.username === username && item.password === password);
-    if (!user) {
+    const user = data.users.find((item) => item.username.toLowerCase() === username.toLowerCase());
+    if (!user || !safeStringEqual(user.password, hashPassword(password))) {
       return sendJson(res, 401, { error: "Invalid credentials" });
     }
 
     const token = createSessionToken(user.id, Date.now() + SESSION_TTL_MS);
     setSessionCookie(res, token);
     return sendJson(res, 200, { user: pickUserPublic(user) });
+  }
+
+  if (pathname === "/api/auth/register" && req.method === "POST") {
+    let body;
+    try {
+      body = await parseJsonBody(req);
+    } catch (err) {
+      return badRequest(res, err.message);
+    }
+
+    const username = String(body.username || "").trim();
+    const password = String(body.password || "").trim();
+    const name = String(body.name || "").trim();
+
+    if (!username || !password || !name) {
+      return badRequest(res, "name, username and password are required");
+    }
+
+    const data = await readData();
+    if (data.users.some(u => u.username.toLowerCase() === username.toLowerCase())) {
+      return badRequest(res, "Username already exists");
+    }
+
+    const user = {
+      id: Date.now(),
+      username,
+      password: hashPassword(password),
+      name,
+      role: "user"
+    };
+
+    data.users.push(user);
+    await writeData(data);
+
+    const token = createSessionToken(user.id, Date.now() + SESSION_TTL_MS);
+    setSessionCookie(res, token);
+    return sendJson(res, 201, { user: pickUserPublic(user) });
   }
 
   if (pathname === "/api/auth/logout" && req.method === "POST") {

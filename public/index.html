@@ -33,21 +33,27 @@
         <h1 class="h4 mb-1 fw-bold">SarthiSync</h1>
         <p class="text-secondary mb-4">Transportation Operations Control Panel</p>
         <form id="loginForm" class="row g-3">
+          <div id="nameGroup" class="col-12 d-none">
+            <label for="name" class="form-label">Full Name</label>
+            <input id="name" name="name" class="form-control" placeholder="John Doe" />
+          </div>
           <div class="col-12">
             <label for="username" class="form-label">Username</label>
-            <input id="username" name="username" class="form-control" placeholder="Agam" required />
+            <input id="username" name="username" class="form-control" placeholder="Enter username" required />
           </div>
           <div class="col-12">
             <label for="password" class="form-label">Password</label>
-            <input id="password" name="password" type="password" class="form-control" placeholder="5280" required />
+            <input id="password" name="password" type="password" class="form-control" placeholder="Enter password" required />
           </div>
           <div class="col-12 d-grid">
-            <button class="btn btn-primary" type="submit">
+            <button class="btn btn-primary" type="submit" id="authBtn">
               <i class="bi bi-box-arrow-in-right me-2"></i>Login
             </button>
           </div>
         </form>
-        <p class="hint mt-3 mb-0">Demo credentials: <code>Agam</code> / <code>5280</code></p>
+        <p class="text-center mt-3 mb-0">
+          <a href="#" id="authToggle" class="text-decoration-none">Don't have an account? Sign Up</a>
+        </p>
       </div>
     </div>
   </section>

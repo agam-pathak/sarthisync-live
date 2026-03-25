@@ -24,7 +24,8 @@ const state = {
   playbackMode: false,
   playbackTimer: null,
   fleetRefreshTimer: null,
-  liveDriftTimer: null
+  liveDriftTimer: null,
+  isSignUp: false
 };
 
 const STATUS_OPTIONS = ["Pending", "In Transit", "Delivered"];
@@ -90,7 +91,11 @@ const ids = {
   invoiceResult: document.getElementById("invoiceResult"),
   exceptionForm: document.getElementById("exceptionForm"),
   exceptionType: document.getElementById("exceptionType"),
-  exceptionNote: document.getElementById("exceptionNote")
+  exceptionNote: document.getElementById("exceptionNote"),
+  nameGroup: document.getElementById("nameGroup"),
+  nameInput: document.getElementById("name"),
+  authBtn: document.getElementById("authBtn"),
+  authToggle: document.getElementById("authToggle")
 };
 
 function showFlash(message, type = "info") {
@@ -1076,22 +1081,35 @@ async function handleDeleteAssignment(assignmentId) {
 }
 
 function bindEvents() {
+  ids.authToggle.addEventListener("click", (e) => {
+    e.preventDefault();
+    state.isSignUp = !state.isSignUp;
+    ids.nameGroup.classList.toggle("d-none", !state.isSignUp);
+    ids.nameInput.required = state.isSignUp;
+    ids.authBtn.innerHTML = state.isSignUp ? '<i class="bi bi-person-plus me-2"></i>Sign Up' : '<i class="bi bi-box-arrow-in-right me-2"></i>Login';
+    ids.authToggle.textContent = state.isSignUp ? "Already have an account? Login" : "Don't have an account? Sign Up";
+  });
+
   ids.loginForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
     const username = document.getElementById("username").value.trim();
     const password = document.getElementById("password").value.trim();
+    const name = ids.nameInput.value.trim();
+
+    const endpoint = state.isSignUp ? "/api/auth/register" : "/api/auth/login";
+    const body = state.isSignUp ? { username, password, name } : { username, password };
 
     try {
-      const result = await api("/api/auth/login", {
+      const result = await api(endpoint, {
         method: "POST",
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify(body)
       });
       state.user = result.user;
       ids.userBadge.textContent = `${state.user.name} (${state.user.role})`;
       setView(true);
       await loadAllData();
-      showFlash("Logged in successfully.", "success");
+      showFlash(state.isSignUp ? "Account created successfully!" : "Logged in successfully.", "success");
     } catch (err) {
       showFlash(err.message, "error");
     }
